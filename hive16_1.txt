@@ -1,0 +1,23 @@
+-bash-4.1$ vi users.txt
+1	Amit	100	DNA
+2	Sumit	200	DNA
+3	Yadav	300	DNA
+4	Sunil	500	FCS
+5	Kranti	100	FCS
+6	Mahoor	200	FCS
+
+a)SELECT name, salary, LEAD(salary) OVER (PARTITION BY unit ORDER BY salary)
+FROM users;
+output:
+Amit 100 200
+kranthi 100 200
+
+b)select id, name,salary from 
+(
+select id, name,salary, unit,avg(salary) over(partition by unit) as avgsalary from users e 
+) e 
+where e.salary>e.avgsalary;
+
+output:
+2 Sumit 200 DNA
+4 Sunil 500 FCS
